@@ -1,0 +1,506 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+
+<title>ET617 — Educational App Design</title>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+
+<style>
+
+:root{
+    --bg:#0f172a;
+    --card:#111827cc;
+    --glass:rgba(255,255,255,0.06);
+    --border:rgba(255,255,255,0.1);
+    --primary:#7c3aed;
+    --secondary:#06b6d4;
+    --accent:#22c55e;
+    --text:#f8fafc;
+    --muted:#94a3b8;
+}
+
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+}
+
+body{
+    font-family:'Inter',sans-serif;
+    background:
+        radial-gradient(circle at top left,#1e1b4b 0%,transparent 30%),
+        radial-gradient(circle at bottom right,#0f766e 0%,transparent 30%),
+        var(--bg);
+    color:var(--text);
+    line-height:1.6;
+    overflow-x:hidden;
+}
+
+.container{
+    width:min(1200px,92%);
+    margin:auto;
+}
+
+.hero{
+    min-height:90vh;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    text-align:center;
+    position:relative;
+}
+
+.hero::before{
+    content:'';
+    position:absolute;
+    inset:0;
+    background:
+    linear-gradient(to bottom,rgba(0,0,0,0.2),rgba(0,0,0,0.7));
+}
+
+.hero-content{
+    position:relative;
+    z-index:2;
+}
+
+.badge{
+    display:inline-block;
+    padding:10px 18px;
+    border-radius:999px;
+    background:rgba(255,255,255,0.08);
+    border:1px solid var(--border);
+    backdrop-filter:blur(10px);
+    color:#c4b5fd;
+    margin-bottom:24px;
+    font-weight:600;
+}
+
+.hero h1{
+    font-size:clamp(3rem,8vw,6rem);
+    font-weight:800;
+    line-height:1.05;
+    margin-bottom:20px;
+}
+
+.gradient{
+    background:linear-gradient(90deg,var(--primary),var(--secondary));
+    -webkit-background-clip:text;
+    -webkit-text-fill-color:transparent;
+}
+
+.hero p{
+    max-width:800px;
+    margin:auto;
+    font-size:1.2rem;
+    color:var(--muted);
+}
+
+.section{
+    padding:100px 0;
+}
+
+.section-title{
+    font-size:2.5rem;
+    margin-bottom:16px;
+    font-weight:800;
+}
+
+.section-sub{
+    color:var(--muted);
+    max-width:800px;
+    margin-bottom:60px;
+}
+
+.grid{
+    display:grid;
+    grid-template-columns:repeat(auto-fit,minmax(280px,1fr));
+    gap:24px;
+}
+
+.card{
+    background:var(--glass);
+    border:1px solid var(--border);
+    backdrop-filter:blur(12px);
+    border-radius:24px;
+    padding:28px;
+    transition:0.35s ease;
+}
+
+.card:hover{
+    transform:translateY(-8px);
+    border-color:rgba(255,255,255,0.25);
+}
+
+.card h3{
+    margin-bottom:12px;
+    font-size:1.3rem;
+}
+
+.card p{
+    color:var(--muted);
+}
+
+.timeline{
+    position:relative;
+    margin-top:40px;
+}
+
+.timeline::before{
+    content:'';
+    position:absolute;
+    left:50%;
+    top:0;
+    width:4px;
+    height:100%;
+    background:linear-gradient(var(--primary),var(--secondary));
+    transform:translateX(-50%);
+}
+
+.timeline-item{
+    width:50%;
+    padding:30px;
+    position:relative;
+}
+
+.timeline-item:nth-child(odd){
+    left:0;
+    text-align:right;
+}
+
+.timeline-item:nth-child(even){
+    left:50%;
+}
+
+.timeline-dot{
+    width:18px;
+    height:18px;
+    background:var(--secondary);
+    border-radius:50%;
+    position:absolute;
+    top:42px;
+    right:-9px;
+}
+
+.timeline-item:nth-child(even) .timeline-dot{
+    left:-9px;
+}
+
+.timeline-card{
+    background:var(--glass);
+    border:1px solid var(--border);
+    border-radius:24px;
+    padding:28px;
+    backdrop-filter:blur(10px);
+}
+
+.timeline-card h3{
+    margin-bottom:10px;
+}
+
+.timeline-card small{
+    display:inline-block;
+    margin-bottom:16px;
+    color:#c4b5fd;
+    font-weight:600;
+}
+
+.timeline-card p{
+    color:var(--muted);
+}
+
+.highlight{
+    background:linear-gradient(135deg,var(--primary),var(--secondary));
+    border-radius:32px;
+    padding:60px;
+    text-align:center;
+    margin-top:80px;
+}
+
+.highlight h2{
+    font-size:2.8rem;
+    margin-bottom:20px;
+}
+
+.highlight p{
+    max-width:800px;
+    margin:auto;
+    font-size:1.1rem;
+}
+
+.footer{
+    padding:40px 0;
+    text-align:center;
+    color:var(--muted);
+    border-top:1px solid rgba(255,255,255,0.08);
+}
+
+@media(max-width:900px){
+
+.timeline::before{
+    left:20px;
+}
+
+.timeline-item{
+    width:100%;
+    left:0 !important;
+    text-align:left !important;
+    padding-left:60px;
+}
+
+.timeline-dot{
+    left:12px !important;
+    right:auto;
+}
+
+.hero{
+    min-height:70vh;
+}
+
+}
+
+</style>
+</head>
+
+<body>
+
+<section class="hero">
+    <div class="hero-content container">
+        <div class="badge">
+            IIT Bombay • ET617
+        </div>
+
+        <h1>
+            Educational <span class="gradient">App Design</span>
+        </h1>
+
+        <p>
+            A project-driven educational technology course focused on client-based
+            software design, agile development, educational innovation,
+            and iterative product creation.
+        </p>
+    </div>
+</section>
+
+<section class="section container">
+
+    <h2 class="section-title">
+        Course Vision
+    </h2>
+
+    <p class="section-sub">
+        ET617 enables students to collaboratively design and develop
+        educational applications for real clients using agile methodologies,
+        user-centered design, and iterative development processes.
+    </p>
+
+    <div class="grid">
+
+        <div class="card">
+            <h3>Real-World Projects</h3>
+            <p>
+                Students work with external clients and educational stakeholders
+                on authentic EdTech problems.
+            </p>
+        </div>
+
+        <div class="card">
+            <h3>Agile Development</h3>
+            <p>
+                Teams learn iterative software development practices including
+                prototyping, sprint reviews, and feedback loops.
+            </p>
+        </div>
+
+        <div class="card">
+            <h3>Collaborative Design</h3>
+            <p>
+                Focus on interdisciplinary teamwork, requirement analysis,
+                and educational interface design.
+            </p>
+        </div>
+
+    </div>
+
+</section>
+
+<section class="section container">
+
+    <h2 class="section-title">
+        Semester Roadmap
+    </h2>
+
+    <p class="section-sub">
+        A structured journey from client onboarding to final deployment and reflection.
+    </p>
+
+    <div class="timeline">
+
+        <div class="timeline-item">
+            <div class="timeline-dot"></div>
+            <div class="timeline-card">
+                <small>Pre-Semester</small>
+                <h3>Client Engagement</h3>
+                <p>
+                    Identify and onboard project partners, define project ideas,
+                    and establish collaboration expectations.
+                </p>
+            </div>
+        </div>
+
+        <div class="timeline-item">
+            <div class="timeline-dot"></div>
+            <div class="timeline-card">
+                <small>Week 1</small>
+                <h3>Course Orientation</h3>
+                <p>
+                    Introduce course workflow, assessment, examples,
+                    and project ecosystem.
+                </p>
+            </div>
+        </div>
+
+        <div class="timeline-item">
+            <div class="timeline-dot"></div>
+            <div class="timeline-card">
+                <small>Week 2</small>
+                <h3>Software Design Foundations</h3>
+                <p>
+                    Agile methodologies, educational technology frameworks,
+                    and interaction logging concepts.
+                </p>
+            </div>
+        </div>
+
+        <div class="timeline-item">
+            <div class="timeline-dot"></div>
+            <div class="timeline-card">
+                <small>Week 3</small>
+                <h3>Team Formation</h3>
+                <p>
+                    Students form groups, select projects,
+                    and initiate stakeholder coordination.
+                </p>
+            </div>
+        </div>
+
+        <div class="timeline-item">
+            <div class="timeline-dot"></div>
+            <div class="timeline-card">
+                <small>Week 4–5</small>
+                <h3>Requirement Analysis</h3>
+                <p>
+                    Teams conduct client meetings, document requirements,
+                    and prepare project plans.
+                </p>
+            </div>
+        </div>
+
+        <div class="timeline-item">
+            <div class="timeline-dot"></div>
+            <div class="timeline-card">
+                <small>Week 6–7</small>
+                <h3>Prototype Development</h3>
+                <p>
+                    Early application prototypes are built,
+                    evaluated, and iteratively improved.
+                </p>
+            </div>
+        </div>
+
+        <div class="timeline-item">
+            <div class="timeline-dot"></div>
+            <div class="timeline-card">
+                <small>Mid-Semester</small>
+                <h3>Formal Review</h3>
+                <p>
+                    Prototype demonstrations and feedback-driven evaluations.
+                </p>
+            </div>
+        </div>
+
+        <div class="timeline-item">
+            <div class="timeline-dot"></div>
+            <div class="timeline-card">
+                <small>Week 8–12</small>
+                <h3>Iterative Development</h3>
+                <p>
+                    Refinement, usability improvements,
+                    integration, testing, and documentation.
+                </p>
+            </div>
+        </div>
+
+        <div class="timeline-item">
+            <div class="timeline-dot"></div>
+            <div class="timeline-card">
+                <small>End Semester</small>
+                <h3>Final Showcase</h3>
+                <p>
+                    Final presentations, project reports,
+                    and evaluation symposium with clients and faculty.
+                </p>
+            </div>
+        </div>
+
+    </div>
+
+</section>
+
+<section class="section container">
+
+    <h2 class="section-title">
+        Course Infrastructure
+    </h2>
+
+    <div class="grid">
+
+        <div class="card">
+            <h3>GitHub Organization</h3>
+            <p>
+                Centralized repositories for collaborative development,
+                issue tracking, and version control.
+            </p>
+        </div>
+
+        <div class="card">
+            <h3>WhatsApp Community</h3>
+            <p>
+                Fast communication channel for announcements,
+                coordination, and peer collaboration.
+            </p>
+        </div>
+
+        <div class="card">
+            <h3>Project Documentation</h3>
+            <p>
+                Includes MoM templates, reports,
+                presentations, and feedback systems.
+            </p>
+        </div>
+
+    </div>
+
+    <div class="highlight">
+        <h2>
+            Building Educational Technology with Real Impact
+        </h2>
+
+        <p>
+            ET617 combines instructional design, software engineering,
+            user research, and stakeholder collaboration to create
+            meaningful educational applications that address authentic learning needs.
+        </p>
+    </div>
+
+</section>
+
+<footer class="footer">
+    ET617 — Educational App Design • IIT Bombay
+</footer>
+
+</body>
+</html>
